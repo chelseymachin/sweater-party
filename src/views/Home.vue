@@ -1,6 +1,6 @@
 <template>
-  <div class="container flex flex-col">
-    <h1 class="text-8xl font-extrabold text-pink-500">Sweater Party</h1>
+  <div class="container flex flex-col items-center">
+    <h1 class="text-7xl font-extrabold text-pink-500">Sweater Party</h1>
     <button @click="loginWithRavelry" class="btn btn-primary mt-6">Login with Ravelry</button>
   </div>
 </template>
@@ -21,4 +21,14 @@ const loginWithRavelry = () => {
   window.location.href = oauthUrl
 }
 </script>
-<style scoped></style>
+<style scoped>
+.container {
+  margin-top: 14rem;
+  text-align: center;
+  width: 100%;
+}
+
+button {
+  width: 300px;
+}
+</style>
