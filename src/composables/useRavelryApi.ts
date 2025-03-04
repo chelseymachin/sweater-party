@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/stores/auth'
 import { useUserStore } from '@/stores/user'
-import type { RavelryUser } from '@/types/ravelry'
+import type { RavelryProject, RavelryProjectList, RavelryUser } from '@/types/ravelry'
 
 export const fetchCurrentUser = async () => {
   const authStore = useAuthStore()
@@ -24,15 +24,16 @@ export const fetchCurrentUser = async () => {
       throw new Error(`API Error: ${response.status} ${await response.text()}`)
     }
 
-    const data: RavelryUser = await response.json()
-    userStore.setUser(data)
+    const rawData = await response.json()
+    const userData: RavelryUser = rawData.user
+    userStore.setUser(userData)
   } catch (error) {
     console.error('🚨 Error fetching Ravelry user data:', error)
     return null
   }
 }
 
-export const getCurrentUserProjectsList = async () => {
+export const getCurrentUserProjectList = async () => {
   const authStore = useAuthStore()
   const userStore = useUserStore()
   let currentUser = userStore.user
@@ -45,7 +46,7 @@ export const getCurrentUserProjectsList = async () => {
 
   try {
     const response = await fetch(
-      `https://api.ravelry.com/projects/${currentUser.user.username}/list.json`,
+      `https://api.ravelry.com/projects/${currentUser.username}/list.json`,
       {
         method: 'GET',
         headers: {
@@ -58,8 +59,8 @@ export const getCurrentUserProjectsList = async () => {
       throw new Error(`API Error: ${response.status} ${await response.text()}`)
     }
 
-    const data = await response.json()
-    console.log(data)
+    const data: RavelryProjectList = await response.json()
+    userStore.setUserProjectList(data)
   } catch (error) {
     console.error('🚨 Error fetching Ravelry user projects:', error)
     return null
