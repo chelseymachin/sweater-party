@@ -17,8 +17,6 @@ const generateRandomState = () => {
 const loginWithRavelry = () => {
   const state = generateRandomState()
   authStore.setState(state)
-  console.log(state)
-  console.log(authStore.oauthState)
   const oauthUrl = `https://www.ravelry.com/oauth2/auth?client_id=${import.meta.env.VITE_RAVELRY_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(import.meta.env.VITE_REDIRECT_URI)}&scope=offline&state=${state}`
   window.location.href = oauthUrl
 }

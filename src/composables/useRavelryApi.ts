@@ -23,7 +23,6 @@ export const fetchCurrentUser = async () => {
     }
 
     const data: RavelryUser = await response.json()
-    console.log(data)
     return data
   } catch (error) {
     console.error('🚨 Error fetching Ravelry user data:', error)

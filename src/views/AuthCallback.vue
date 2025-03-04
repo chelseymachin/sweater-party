@@ -44,9 +44,6 @@ const fetchAccessToken = async (code: string) => {
 }
 
 onMounted(() => {
-  console.log(import.meta.env.VITE_BACKEND_URL)
-  console.log(import.meta.env.VITE_RAVELRY_CLIENT_ID)
-  console.log(import.meta.env.VITE_REDIRECT_URI)
   const authCode = route.query.code as string
   const returnedState = route.query.state as string
 
