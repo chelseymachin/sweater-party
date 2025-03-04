@@ -4,6 +4,7 @@ import type { RavelryUser } from '@/types/ravelry'
 
 export const fetchCurrentUser = async () => {
   const authStore = useAuthStore()
+  const userStore = useUserStore()
   let accessToken = authStore.accessToken
 
   if (!accessToken) {
@@ -24,7 +25,7 @@ export const fetchCurrentUser = async () => {
     }
 
     const data: RavelryUser = await response.json()
-    return data
+    userStore.setUser(data)
   } catch (error) {
     console.error('🚨 Error fetching Ravelry user data:', error)
     return null

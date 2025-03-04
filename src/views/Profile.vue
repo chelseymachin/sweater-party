@@ -9,15 +9,18 @@
 import { ref, onMounted } from 'vue'
 import { fetchCurrentUser, getCurrentUserProjectsList } from '@/composables/useRavelryApi'
 import { useAuthStore } from '@/stores/auth'
+import { useUserStore } from '@/stores/user'
 import type { RavelryUser } from '@/types/ravelry'
 import router from '@/router'
 
 const authStore = useAuthStore()
+const userStore = useUserStore()
 const user = ref<RavelryUser | null>(null)
 
 onMounted(async () => {
   if (authStore.isAuthenticated) {
-    user.value = await fetchCurrentUser()
+    await fetchCurrentUser()
+    user.value = userStore.user
     await getCurrentUserProjectsList()
   }
 })
