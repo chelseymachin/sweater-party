@@ -4,6 +4,7 @@ import { ref, computed } from 'vue'
 export const useAuthStore = defineStore('auth', () => {
   const accessToken = ref<string | null>(null)
   const refreshToken = ref<string | null>(null)
+  const oauthState = ref<string | null>(sessionStorage.getItem('oauth_state'))
 
   const isAuthenticated = computed(() => !!accessToken.value)
 
@@ -12,9 +13,16 @@ export const useAuthStore = defineStore('auth', () => {
     refreshToken.value = newRefreshToken
   }
 
-  function clearTokens() {
+  function setState(newState: string) {
+    oauthState.value = newState
+    sessionStorage.setItem('oauth_state', newState)
+  }
+
+  function logout() {
     accessToken.value = null
     refreshToken.value = null
+    oauthState.value = null
+    sessionStorage.removeItem('oauth_state')
   }
 
   return {
@@ -22,6 +30,8 @@ export const useAuthStore = defineStore('auth', () => {
     refreshToken,
     isAuthenticated,
     setTokens,
-    clearTokens,
+    logout,
+    oauthState,
+    setState,
   }
 })

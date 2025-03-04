@@ -44,14 +44,13 @@ const fetchAccessToken = async (code: string) => {
 }
 
 onMounted(() => {
-  console.log('🔍 Route Query:', route.query)
-
   const authCode = route.query.code as string
   const returnedState = route.query.state as string
-  const storedState = localStorage.getItem('oauth_state') // Get stored state
+
+  const storedState = authStore.oauthState
 
   if (!returnedState || returnedState !== storedState) {
-    console.error('❌ Invalid state! Possible CSRF attack.')
+    console.error('❌ Invalid state!', storedState, returnedState)
     router.push('/auth/error')
     return
   }

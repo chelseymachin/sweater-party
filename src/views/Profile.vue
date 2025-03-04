@@ -1,10 +1,7 @@
 <template>
-  <div v-if="authStore.isAuthenticated">
+  <div>
     <h2 class="text-2xl font-bold">Welcome, {{ user?.user?.username }}!</h2>
-    <button @click="authStore.clearTokens">Logout</button>
-  </div>
-  <div v-else>
-    <p>Not logged in. <router-link to="/">Login</router-link></p>
+    <button @click="logout">Logout</button>
   </div>
 </template>
 
@@ -13,6 +10,7 @@ import { ref, onMounted } from 'vue'
 import { fetchCurrentUser } from '@/composables/useRavelryAPI'
 import { useAuthStore } from '@/stores/auth'
 import type { RavelryUser } from '@/types/ravelry'
+import router from '@/router'
 
 const authStore = useAuthStore()
 const user = ref<RavelryUser | null>(null)
@@ -22,4 +20,9 @@ onMounted(async () => {
     user.value = await fetchCurrentUser()
   }
 })
+
+const logout = () => {
+  authStore.logout
+  router.push('/')
+}
 </script>
