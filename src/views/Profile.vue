@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { fetchCurrentUser } from '@/composables/useRavelryApi'
+import { fetchCurrentUser, getCurrentUserProjectsList } from '@/composables/useRavelryApi'
 import { useAuthStore } from '@/stores/auth'
 import type { RavelryUser } from '@/types/ravelry'
 import router from '@/router'
@@ -18,6 +18,7 @@ const user = ref<RavelryUser | null>(null)
 onMounted(async () => {
   if (authStore.isAuthenticated) {
     user.value = await fetchCurrentUser()
+    await getCurrentUserProjectsList()
   }
 })
 
