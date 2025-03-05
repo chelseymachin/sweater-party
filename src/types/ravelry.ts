@@ -20,7 +20,15 @@ export interface RavelryProject {
   completed_day_set: boolean
   craft_name: string
   created_at: string
-  first_photo: string
+  first_photo: {
+    id: number
+    square_url: string
+    medium_url: string
+    thumbnail_url: string
+    small_url: string
+    medium2_url: string
+    small2_url: string
+  }
   gauge: string
   id: number
   links: {
@@ -37,6 +45,4 @@ export interface RavelryProject {
   status_name: string
 }
 
-export interface RavelryProjectList {
-  projects: RavelryProject[]
-}
+export type RavelryProjectList = RavelryProject[]

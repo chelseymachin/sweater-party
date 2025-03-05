@@ -59,8 +59,9 @@ export const getCurrentUserProjectList = async () => {
       throw new Error(`API Error: ${response.status} ${await response.text()}`)
     }
 
-    const data: RavelryProjectList = await response.json()
-    userStore.setUserProjectList(data)
+    const rawData = await response.json()
+    const projectsData: RavelryProjectList = rawData.projects
+    userStore.setUserProjectList(projectsData)
   } catch (error) {
     console.error('🚨 Error fetching Ravelry user projects:', error)
     return null
